@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Artwork;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ArtworkSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Artwork::factory(10)->create();
     }
 }

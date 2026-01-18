@@ -12,6 +12,7 @@ class Artwork extends Model
     public $timestamps = true;
     protected $fillable = [
         'artist_id',
+        'collection_id',
         'category_id',
         'owner_id',
         'status_id',
@@ -29,4 +30,24 @@ class Artwork extends Model
         'lot_number',
         'artwork_created_at',
     ];
+
+    public function artist(){
+        return $this->belongsTo(User::class, 'artist_id');
+    }
+
+    public function owner(){
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function status(){
+        return $this->belongsTo(ArtworkStatus::class, 'status_id');
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    public function bids() {
+        return $this->hasMany(Bid::class,'artwork_id','id');
+    }
 }

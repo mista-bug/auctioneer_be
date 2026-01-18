@@ -2,6 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\AcquisitionMethod;
+use App\Models\Artwork;
+use App\Models\Collection;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +21,11 @@ class BidFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'artwork_id' => Artwork::pluck('id')->random(),
+            'collection_id' => Collection::pluck('id')->random(),
+            'bid_method_id' => AcquisitionMethod::pluck('id')->random(),
+            'bidder_id' => User::pluck('id')->random(),
+            'bid_amount' => fake()->randomNumber(6),
         ];
     }
 }

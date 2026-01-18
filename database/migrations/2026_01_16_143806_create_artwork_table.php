@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('artworks', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('artist_id')->nullable();
+            $table->bigInteger('collection_id')->nullable();
             $table->bigInteger('category_id')->nullable();
             $table->bigInteger('owner_id')->nullable();
             $table->bigInteger('status_id')->nullable();
             $table->string('title')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->string('medium')->nullable();

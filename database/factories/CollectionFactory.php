@@ -25,7 +25,7 @@ class CollectionFactory extends Factory
             'location' => fake()->country(),
             'address' => fake()->address(),
             'description' => fake()->sentence(10),
-            'organizer_id' => User::all()->random()->first()->id,
+            'organizer_id' => User::pluck('id')->random(),
         ];
     }
 }
