@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('collections',function (Blueprint $table) {
             $table->id();
-            $table->string('event_id');
-            $table->string('name');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->string('location');
-            $table->string('address');
-            $table->longText('description');
-            $table->bigInteger('organizer_id');
+            $table->string('event_id')->nullable();
+            $table->string('name')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('location')->nullable();
+            $table->string('address')->nullable();
+            $table->longText('description')->nullable();
+            $table->bigInteger('organizer_id')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('collections');
+        Schema::dropIfExists('collections');
     }
 };

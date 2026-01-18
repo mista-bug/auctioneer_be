@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('acquisition_method', function (Blueprint $table) {
+        Schema::create('acquisition_methods', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('acquisition_method');
+        Schema::dropIfExists('acquisition_methods');
     }
 };

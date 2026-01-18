@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medium', function (Blueprint $table) {
+        Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->bigInteger('artwork_id');
+            $table->bigInteger('collection_id');
+            $table->bigInteger('bid_method_id');
+            $table->bigInteger('bidder_id');
+            $table->decimal('bid_amount',11,2);
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medium');
+        Schema::dropIfExists('bids');
     }
 };

@@ -13,23 +13,23 @@ return new class extends Migration
     {
         Schema::create('artworks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('artist_id');
-            $table->bigInteger('category_id');
-            $table->bigInteger('owner_id');
-            $table->bigInteger('status_id');
-            $table->string('title');
-            $table->string('description');
-            $table->integer('width');
-            $table->integer('height');
-            $table->string('medium');
-            $table->longText('image_url');
-            $table->string('acquisition_source');
-            $table->decimal('estimate_low',11,2);
-            $table->decimal('estimate_high',11,2);
-            $table->decimal('starting_bid',11,2);
-            $table->decimal('reserve_price',11,2);
-            $table->integer('lot_number');
-            $table->date('artwork_created_at');
+            $table->bigInteger('artist_id')->nullable();
+            $table->bigInteger('category_id')->nullable();
+            $table->bigInteger('owner_id')->nullable();
+            $table->bigInteger('status_id')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            $table->integer('width')->nullable();
+            $table->integer('height')->nullable();
+            $table->string('medium')->nullable();
+            $table->longText('image_url')->nullable();
+            $table->string('acquisition_source')->nullable();
+            $table->decimal('estimate_low',11,2)->nullable();
+            $table->decimal('estimate_high',11,2)->nullable();
+            $table->decimal('starting_bid',11,2)->nullable();
+            $table->decimal('reserve_price',11,2)->nullable();
+            $table->integer('lot_number')->nullable();
+            $table->date('artwork_created_at')->nullable();
             $table->timestamps();
         });
     }
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('artwork');
+        Schema::dropIfExists('artworks');
     }
 };
