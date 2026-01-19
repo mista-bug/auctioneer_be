@@ -70,4 +70,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(UserType::class, 'type_id');
     }
+
+    public function bids()
+    {
+        return $this->hasMany(Bid::class,'bidder_id');
+    }
+
+    public function listings()
+    {
+        return $this->hasMany(Artwork::class,'artist_id');
+    }
 }

@@ -50,4 +50,7 @@ class Artwork extends Model
     public function bids() {
         return $this->hasMany(Bid::class,'artwork_id','id');
     }
+    public function medium() {
+        return $this->hasMany(Bid::class,'medium','id');
+    }
 }
