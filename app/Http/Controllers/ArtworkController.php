@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Artwork;
 use Illuminate\Http\Request;
+use Log;
 
 class ArtworkController extends Controller
 {
@@ -17,6 +18,7 @@ class ArtworkController extends Controller
             'owner',
             'status',
             'category',
+            // 'provenance',
         ])->get());
     }
 
@@ -26,9 +28,10 @@ class ArtworkController extends Controller
     public function store(Request $request)
     {
         try {
-            Artwork::create($request->all());
+            $artwork = Artwork::create($request->all());
             return response()->json([
-                'message' => 'Successful.'
+                'message' => 'Successful.',
+                'data' => $artwork, 
             ],200);
         } catch (\Throwable $th) {
             return response()->json([
@@ -44,7 +47,7 @@ class ArtworkController extends Controller
     {
         try {
             $foundArtwork = $artwork
-                ->with(['artist','owner','status','category','bids.bidder'])
+                ->with(['artist','owner','status','category','bids.bidder','provenance.owner'])
                 ->findOrFail($request->id);
             return response()->json($foundArtwork,200);
         } catch (\Throwable $th) {
@@ -60,14 +63,39 @@ class ArtworkController extends Controller
     public function update(Request $request, Artwork $artwork)
     {
         try {
-            $artwork->update($request->all());
+            $validated = $request->validate([
+                'artwork_id' => 'required|exists:artworks,id',
+                'artist_id' => 'required|exists:users,id',
+                'title' => 'sometimes|string',
+                'description' => 'sometimes|string',
+                'reserve_price' => 'sometimes|string',
+            ]);
+    
+            $artwork = Artwork::findOrFail($validated['artwork_id']);
+    
+            if ($artwork->artist_id != $validated['artist_id']) {
+                return response()->json([
+                    'message' => 'Unauthorized. Artwork does not belong to this artist.'
+                ], 403);
+            }
+    
+            $updateData = collect($validated)->except(['artwork_id', 'artist_id'])->toArray();
+            $artwork->update($updateData);
+    
+            Log::info('updated:', $artwork->toArray());
+    
             return response()->json([
-                'message' => 'Successful.'
-            ],200);
+                'message' => 'Successful.',
+                'data' => $artwork
+            ], 200);
+    
         } catch (\Throwable $th) {
+            Log::error('Update failed:', ['error' => $th->getMessage()]);
+            
             return response()->json([
-                'message' => 'Unsuccessful.'
-            ],500);
+                'message' => 'Unsuccessful.',
+                'error' => $th->getMessage()
+            ], 500);
         }
     }
 
@@ -77,7 +105,7 @@ class ArtworkController extends Controller
     public function destroy(Artwork $artwork)
     {
         try {
-            $artwork->delete(request()->all());
+            $artwork->destroy(request()->id);
             return response()->json([
                 'message' => 'Successful.'
             ],200);

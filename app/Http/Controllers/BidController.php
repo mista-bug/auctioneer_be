@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Artwork;
 use App\Models\Bid;
+use App\Models\BidMethod;
 use Illuminate\Http\Request;
 
 class BidController extends Controller
@@ -26,13 +28,21 @@ class BidController extends Controller
     public function store(Request $request)
     {   
         try {
-            Bid::create($request->all());
+            Bid::create([
+                'artwork_id' => $request->artwork_id,
+                'collection_id' => $request->collection_id,
+                'bid_method_id' => 3,
+                'bidder_id' => $request->user_id,
+                'bid_amount' => $request->bid_amount,
+            ]);
+
             return response()->json([
                 'message' => 'Successful.'
             ],200);
+
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Unsuccessful.'
+                'message' => $th->getMessage()
             ],500);
         }
     }
@@ -68,13 +78,15 @@ class BidController extends Controller
     public function destroy(Bid $bid)
     {
         try {
-            $bid->delete(request()->id);
+            $bid->destroy(request()->id);
+            
             return response()->json([
                 'message' => 'Successful.'
             ],200);
+
         } catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Unsuccessful.'
+                'message' => $th->getMessage()
             ],500);
         }
     }

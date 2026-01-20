@@ -22,4 +22,9 @@ class ProvenanceRecord extends Model
         'sale_address',
         'owner_number',
     ];
+
+    public function owner(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 }

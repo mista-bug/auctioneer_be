@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Validation\ValidationException;
+use Log;
 use Validator;
 
 class Bid extends Model
@@ -33,7 +34,7 @@ class Bid extends Model
             'collection_id' => 'required|integer|exists:collections,id',
             'bid_method_id' => 'required|integer|exists:bid_methods,id',
             'bidder_id' => 'required|integer|exists:users,id',
-            'bid_amount' => 'required|decimal:2',
+            'bid_amount' => 'required|integer',
         ]);
 
         if ($validator->fails()) {

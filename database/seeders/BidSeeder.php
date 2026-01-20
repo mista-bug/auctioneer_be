@@ -13,6 +13,6 @@ class BidSeeder extends Seeder
      */
     public function run(): void
     {
-        Bid::factory(rand(50,100))->create();
+        Bid::factory(300)->create();
     }
 }

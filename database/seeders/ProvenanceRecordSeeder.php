@@ -13,6 +13,6 @@ class ProvenanceRecordSeeder extends Seeder
      */
     public function run(): void
     {
-        ProvenanceRecord::factory(rand(50,100))->create();
+        ProvenanceRecord::factory(400)->create();
     }
 }

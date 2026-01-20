@@ -30,6 +30,9 @@ class Artwork extends Model
         'lot_number',
         'artwork_created_at',
     ];
+    public function collection(){
+        return $this->belongsTo(Collection::class,'collection_id');
+    }
 
     public function artist(){
         return $this->belongsTo(User::class, 'artist_id');
@@ -52,5 +55,9 @@ class Artwork extends Model
     }
     public function medium() {
         return $this->hasMany(Bid::class,'medium','id');
+    }
+    
+    public function provenance(){
+        return $this->hasMany(ProvenanceRecord::class,'artwork_id');
     }
 }

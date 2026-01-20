@@ -83,7 +83,7 @@ class CollectionController extends Controller
     public function destroy(Collection $collection)
     {
         try {
-            $collection->delete(request()->id);
+            $collection->destroy(request()->id);
             return response()->json([
                 'message' => 'Successful.'
             ],200);
